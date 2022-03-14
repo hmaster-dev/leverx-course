@@ -11,7 +11,7 @@ export class RecordEntity {
   @ManyToOne(() => AuthorEntity, (author: AuthorEntity) => author.records, {
     eager: true,
   })
-  authorName: AuthorEntity;
+  author: AuthorEntity;
   @ApiProperty({ example: 'record' })
   @Column()
   name: string;

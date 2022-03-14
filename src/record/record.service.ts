@@ -32,7 +32,7 @@ export class RecordService implements RecordServiceInterface {
     );
     const record: RecordEntity = new RecordEntity();
     Object.assign(record, {
-      authorName: author,
+      author: author,
       image: image,
       name: createRecordDto.name,
       description: createRecordDto.description,

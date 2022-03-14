@@ -10,6 +10,6 @@ export class AuthorEntity {
   @ApiProperty()
   @Column()
   name: string;
-  @OneToMany(() => RecordEntity, (record: RecordEntity) => record.authorName)
+  @OneToMany(() => RecordEntity, (record: RecordEntity) => record.author)
   records: RecordEntity[];
 }
