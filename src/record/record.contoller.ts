@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -34,13 +35,13 @@ export class RecordContoller {
   @ApiOperation({ summary: 'Получить все пластинки' })
   @ApiResponse({ status: 200 })
   @Get()
-  async getAllRecords(): Promise<RecordEntity[]> {
-    return await this.recordService.getAllRecords();
+  async getAllRecords(@Query('sort') sort: string): Promise<RecordEntity[]> {
+    return await this.recordService.getAllRecords(sort);
   }
 
   @ApiOperation({ summary: 'Получить пластинку по id' })
   @ApiResponse({ status: 200 })
-  @Get(':id')
+  @Get('get/:id')
   async getRecordById(@Param('id') id: number): Promise<RecordEntity> {
     return await this.recordService.getRecordById(id);
   }
@@ -73,5 +74,12 @@ export class RecordContoller {
     @UploadedFile() image,
   ): Promise<RecordEntity> {
     return await this.recordService.createRecord(createRecordDto, image.path);
+  }
+
+  @ApiOperation({ summary: 'Поиск пластинки по названию и автору' })
+  @ApiResponse({ status: 200 })
+  @Get('search')
+  async searchRecords(@Query('q') query: string): Promise<any[]> {
+    return await this.recordService.searchRecords(query);
   }
 }

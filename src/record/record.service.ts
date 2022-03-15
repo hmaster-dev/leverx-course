@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Query } from '@nestjs/common';
 import { RecordServiceInterface } from './types/recordService.interface';
 import { RecordEntity } from './record.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,8 +15,8 @@ export class RecordService implements RecordServiceInterface {
     private readonly authorService: AuthorService,
   ) {}
 
-  async getAllRecords(): Promise<RecordEntity[]> {
-    return await this.recordRepository.getAllRecords();
+  async getAllRecords(sort: string): Promise<RecordEntity[]> {
+    return await this.recordRepository.getAllRecords(sort);
   }
 
   async getRecordById(id: number): Promise<RecordEntity> {
@@ -39,5 +39,9 @@ export class RecordService implements RecordServiceInterface {
       price: createRecordDto.price,
     });
     return this.recordRepository.createRecord(record);
+  }
+
+  async searchRecords(query: string): Promise<any[]> {
+    return await this.recordRepository.searchRecords(query);
   }
 }
