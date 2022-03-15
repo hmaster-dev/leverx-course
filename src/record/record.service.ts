@@ -1,4 +1,4 @@
-import { Injectable, Query } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Query } from '@nestjs/common';
 import { RecordServiceInterface } from './types/recordService.interface';
 import { RecordEntity } from './record.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { RecordRepository } from './record.repository';
 import { CreateRecordDto } from './dto/createRecord.dto';
 import { AuthorEntity } from '../author/author.entity';
 import { AuthorService } from '../author/author.service';
+import { ReviewService } from '../review/review.service';
 
 @Injectable()
 export class RecordService implements RecordServiceInterface {
@@ -13,6 +14,8 @@ export class RecordService implements RecordServiceInterface {
     @InjectRepository(RecordRepository)
     private readonly recordRepository: RecordRepository,
     private readonly authorService: AuthorService,
+    @Inject(forwardRef(() => ReviewService))
+    private readonly reviewService: ReviewService,
   ) {}
 
   async getAllRecords(sort: string): Promise<RecordEntity[]> {

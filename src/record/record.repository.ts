@@ -23,10 +23,13 @@ export class RecordRepository extends Repository<RecordEntity> {
     const records: RecordEntity[] = [];
     const dataByName = await getRepository(RecordEntity)
       .createQueryBuilder('records')
+      .leftJoinAndSelect('records.reviews', 'reviews')
+      .leftJoinAndSelect('records.author', 'author')
       .where('records.name like :name', { name: `%${query}%` })
       .getMany();
     const dataByAuthor = await getRepository(RecordEntity)
       .createQueryBuilder('records')
+      .leftJoinAndSelect('records.reviews', 'reviews')
       .leftJoinAndSelect('records.author', 'author')
       .where('author.name like :name', { name: `%${query}%` })
       .getMany();

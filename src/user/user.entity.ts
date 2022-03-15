@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { ReviewEntity } from '../review/review.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -24,4 +25,8 @@ export class UserEntity {
   avatar: string;
   @Column({ default: false })
   isAdmin: boolean;
+  @OneToMany(() => ReviewEntity, (review: ReviewEntity) => review.user, {
+    eager: true,
+  })
+  reviews: ReviewEntity[];
 }

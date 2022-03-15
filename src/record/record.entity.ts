@@ -1,6 +1,13 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import { AuthorEntity } from '../author/author.entity';
+import { ReviewEntity } from '../review/review.entity';
 
 @Entity({ name: 'records' })
 export class RecordEntity {
@@ -24,6 +31,8 @@ export class RecordEntity {
   @ApiProperty()
   @Column()
   price: number;
-  // @Column()
-  // review?: [];
+  @OneToMany(() => ReviewEntity, (review: ReviewEntity) => review.record, {
+    eager: true,
+  })
+  reviews: ReviewEntity[];
 }

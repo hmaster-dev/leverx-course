@@ -1,6 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { AuthorEntity } from './author.entity';
-import { CreateAuthorDto } from './dto/createAuthor.dto';
 
 @EntityRepository(AuthorEntity)
 export class AuthorRepository extends Repository<AuthorEntity> {

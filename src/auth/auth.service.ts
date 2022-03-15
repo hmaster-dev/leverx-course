@@ -24,7 +24,7 @@ export class AuthService {
           email: user.email,
         },
         this.configService.get('JWT_SECRET'),
-        { expiresIn: this.configService.get('JWT_EXPIRE_TIME') },
+        // { expiresIn: this.configService.get('JWT_EXPIRE_TIME') },
       ),
     };
   }

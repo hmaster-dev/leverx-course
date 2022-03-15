@@ -11,6 +11,7 @@ import { GoogleStrategy } from './auth/guards/google.strategy';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './auth/middlewares/auth.middleware';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AuthMiddleware } from './auth/middlewares/auth.middleware';
     AuthModule,
     AuthorModule,
     RecordModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],
