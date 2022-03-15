@@ -18,6 +18,7 @@ import {
   ApiBody,
   ApiConsumes,
   ApiOperation,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -34,8 +35,9 @@ export class RecordContoller {
 
   @ApiOperation({ summary: 'Получить все пластинки' })
   @ApiResponse({ status: 200 })
+  @ApiQuery({ name: 'sort', required: false })
   @Get()
-  async getAllRecords(@Query('sort') sort = ''): Promise<RecordEntity[]> {
+  async getAllRecords(@Query('sort') sort): Promise<RecordEntity[]> {
     return await this.recordService.getAllRecords(sort);
   }
 
