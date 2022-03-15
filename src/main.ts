@@ -9,10 +9,10 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Shustov - Course')
-    // .addBearerAuth(
-    //   { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-    //   'TOKEN',
-    // )
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'TOKEN',
+    )
     .build();
   const pathToPhotos = `upload/`;
   fs.stat(pathToPhotos, function (err) {

@@ -20,7 +20,7 @@ export class AuthService {
     return {
       token: sign(
         {
-          sub: user.id,
+          id: user.id,
           email: user.email,
         },
         this.configService.get('JWT_SECRET'),

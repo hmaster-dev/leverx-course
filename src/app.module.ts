@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthorModule } from './author/author.module';
@@ -7,9 +7,10 @@ import config from './config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from './database.config';
 import { RecordModule } from './record/record.module';
-import { GoogleStrategy } from './google.strategy';
+import { GoogleStrategy } from './auth/guards/google.strategy';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { AuthMiddleware } from './auth/middlewares/auth.middleware';
 
 @Module({
   imports: [
@@ -21,12 +22,19 @@ import { UserModule } from './user/user.module';
       imports: [ConfigModule],
       useClass: DatabaseConfig,
     }),
-    AuthModule,
     UserModule,
+    AuthModule,
     AuthorModule,
     RecordModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}

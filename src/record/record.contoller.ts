@@ -5,11 +5,15 @@ import {
   Param,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { RecordEntity } from './record.entity';
 import { RecordService } from './record.service';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiConsumes,
   ApiOperation,
@@ -20,6 +24,7 @@ import { CreateRecordDto } from './dto/createRecord.dto';
 import { extname } from 'path';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AdminGuard } from '../auth/guards/admin.guard';
 
 @ApiTags('Пластинки')
 @Controller('records')
@@ -44,6 +49,9 @@ export class RecordContoller {
   @ApiResponse({ status: 200 })
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: CreateRecordDto })
+  @ApiBearerAuth('TOKEN')
+  @UsePipes(new ValidationPipe())
+  @UseGuards(AdminGuard)
   @Post()
   @UseInterceptors(
     FileInterceptor('image', {

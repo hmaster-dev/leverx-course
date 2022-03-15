@@ -22,4 +22,6 @@ export class UserEntity {
   birthDate: string;
   @Column({ default: '' })
   avatar: string;
+  @Column({ default: false })
+  isAdmin: boolean;
 }
