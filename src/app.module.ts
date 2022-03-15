@@ -7,6 +7,9 @@ import config from './config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseConfig } from './database.config';
 import { RecordModule } from './record/record.module';
+import { GoogleStrategy } from './google.strategy';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -18,10 +21,12 @@ import { RecordModule } from './record/record.module';
       imports: [ConfigModule],
       useClass: DatabaseConfig,
     }),
+    AuthModule,
+    UserModule,
     AuthorModule,
     RecordModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, GoogleStrategy],
 })
 export class AppModule {}

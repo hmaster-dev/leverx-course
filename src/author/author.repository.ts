@@ -12,9 +12,7 @@ export class AuthorRepository extends Repository<AuthorEntity> {
     return await this.findOne(id);
   }
 
-  async createAuthor(createAuthorDto: CreateAuthorDto): Promise<AuthorEntity> {
-    const author: AuthorEntity = new AuthorEntity();
-    Object.assign(author, createAuthorDto);
+  async createAuthor(author: AuthorEntity): Promise<AuthorEntity> {
     return await this.save(author);
   }
 }

@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateAuthorDto {
   @ApiProperty()
-  @Column()
+  @IsNotEmpty()
   name: string;
 }

@@ -21,6 +21,8 @@ export class AuthorService implements AuthorServiceInterface {
   }
 
   async createAuthor(createAuthorDto: CreateAuthorDto): Promise<AuthorEntity> {
-    return await this.authorRepository.createAuthor(createAuthorDto);
+    const author: AuthorEntity = new AuthorEntity();
+    Object.assign(author, createAuthorDto);
+    return await this.authorRepository.createAuthor(author);
   }
 }
