@@ -1,4 +1,4 @@
-import { Injectable, Query } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Query } from '@nestjs/common';
 import { RecordServiceInterface } from './types/recordService.interface';
 import { RecordEntity } from './record.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,25 +31,36 @@ export class RecordService implements RecordServiceInterface {
   }
 
   async getRecordById(id: number): Promise<RecordEntity> {
-    return await this.recordRepository.getRecordById(id);
+    const record: RecordEntity = await this.recordRepository.getRecordById(id);
+    if (!record) {
+      throw new HttpException(`no record with id=${id}`, HttpStatus.NOT_FOUND);
+    }
+    return record;
   }
 
   async createRecord(
     createRecordDto: CreateRecordDto,
     image: string,
   ): Promise<RecordEntity> {
-    const author: AuthorEntity = await this.authorService.getAuthorById(
-      createRecordDto.authorId,
-    );
-    const record: RecordEntity = new RecordEntity();
-    Object.assign(record, {
-      author: author,
-      image: image,
-      name: createRecordDto.name,
-      description: createRecordDto.description,
-      price: createRecordDto.price,
-    });
-    return this.recordRepository.createRecord(record);
+    try {
+      const author: AuthorEntity = await this.authorService.getAuthorById(
+        createRecordDto.authorId,
+      );
+      const record: RecordEntity = new RecordEntity();
+      Object.assign(record, {
+        author: author,
+        image: image,
+        name: createRecordDto.name,
+        description: createRecordDto.description,
+        price: createRecordDto.price,
+      });
+      return this.recordRepository.createRecord(record);
+    } catch (e) {
+      throw new HttpException(
+        `incorrect data of record`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async searchRecords(query: string): Promise<RecordEntity[]> {

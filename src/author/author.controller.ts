@@ -18,7 +18,6 @@ import {
 } from '@nestjs/swagger';
 import { CreateAuthorDto } from './dto/createAuthor.dto';
 import { AuthorEntity } from './author.entity';
-import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../auth/guards/admin.guard';
 
 @ApiTags('Авторы')
@@ -28,8 +27,6 @@ export class AuthorController {
 
   @ApiOperation({ summary: 'Получить всех авторов' })
   @ApiResponse({ status: 200 })
-  @ApiBearerAuth('TOKEN')
-  @UseGuards(AdminGuard)
   @Get()
   async getAllAuthors(): Promise<AuthorEntity[]> {
     return await this.authorService.getAllAuthors();
@@ -37,8 +34,6 @@ export class AuthorController {
 
   @ApiOperation({ summary: 'Получить автора по id' })
   @ApiResponse({ status: 200 })
-  @ApiBearerAuth('TOKEN')
-  @UseGuards(AdminGuard)
   @Get(':id')
   async getById(@Param('id') id: number): Promise<AuthorEntity> {
     return await this.authorService.getAuthorById(id);

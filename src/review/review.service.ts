@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReviewRepository } from './review.repository';
 import { ReviewEntity } from './review.entity';
@@ -19,12 +19,19 @@ export class ReviewService implements ReviewServiceInterface {
     record: RecordEntity,
     createReviewDto: CreateReviewDto,
   ): Promise<ReviewEntity> {
-    const review: ReviewEntity = new ReviewEntity();
-    Object.assign(review, {
-      user: user,
-      record: record,
-      text: createReviewDto.text,
-    });
-    return await this.reviewRepository.createReview(review);
+    try {
+      const review: ReviewEntity = new ReviewEntity();
+      Object.assign(review, {
+        user: user,
+        record: record,
+        text: createReviewDto.text,
+      });
+      return await this.reviewRepository.createReview(review);
+    } catch (e) {
+      throw new HttpException(
+        `incorrect data of review`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

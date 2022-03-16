@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthorServiceInterface } from './types/authorService.interface';
 import { AuthorEntity } from './author.entity';
 import { AuthorRepository } from './author.repository';
@@ -17,12 +17,23 @@ export class AuthorService implements AuthorServiceInterface {
   }
 
   async getAuthorById(id: number): Promise<AuthorEntity> {
-    return await this.authorRepository.getAuthorById(id);
+    const author: AuthorEntity = await this.authorRepository.getAuthorById(id);
+    if (!author) {
+      throw new HttpException(`no author with ${id}`, HttpStatus.NOT_FOUND);
+    }
+    return author;
   }
 
   async createAuthor(createAuthorDto: CreateAuthorDto): Promise<AuthorEntity> {
-    const author: AuthorEntity = new AuthorEntity();
-    Object.assign(author, createAuthorDto);
-    return await this.authorRepository.createAuthor(author);
+    try {
+      const author: AuthorEntity = new AuthorEntity();
+      Object.assign(author, createAuthorDto);
+      return await this.authorRepository.createAuthor(author);
+    } catch (e) {
+      throw new HttpException(
+        `incorrect data of author`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
