@@ -18,5 +18,7 @@ const config = () => ({
   google_client_secret: process.env.GOOGLE_SECRET,
   jwtSecret: process.env.JWT_SECRET,
   jwtExpireTime: process.env.JWT_EXPIRE_TIME,
+  stripe_key: process.env.STRIPE_SECRET,
+  stripe_currency: process.env.STRIPE_CURRENCY,
 });
 export default config;

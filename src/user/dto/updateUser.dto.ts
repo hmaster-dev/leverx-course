@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { RecordEntity } from '../../record/record.entity';
 
 export class UpdateUserDto {
   @ApiProperty()
-  firstName: string;
+  firstName?: string;
   @ApiProperty()
-  lastName: string;
+  lastName?: string;
   @ApiProperty()
-  birthDate: string;
+  birthDate?: string;
   @ApiProperty()
-  avatar: string;
+  avatar?: string;
+  purchased?: RecordEntity[];
 }

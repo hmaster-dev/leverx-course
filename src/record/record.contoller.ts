@@ -27,6 +27,10 @@ import { extname } from 'path';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AdminGuard } from '../auth/guards/admin.guard';
+import { CreateReviewDto } from '../review/dto/createReview.dto';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { User } from '../user/decorators/user.decorator';
+import { ReviewEntity } from '../review/review.entity';
 
 @ApiTags('Пластинки')
 @Controller('records')
@@ -83,5 +87,34 @@ export class RecordContoller {
   @Get('search')
   async searchRecords(@Query('q') query: string): Promise<any[]> {
     return await this.recordService.searchRecords(query);
+  }
+
+  @ApiOperation({ summary: 'Создание отзыва' })
+  @ApiResponse({ status: 200 })
+  @ApiBody({ type: CreateReviewDto })
+  @ApiBearerAuth('TOKEN')
+  @UsePipes(new ValidationPipe())
+  @UseGuards(AuthGuard)
+  @Post(':id/review')
+  async createAuhtor(
+    @User('id') userId: number,
+    @Param('id') id: number,
+    @Body()
+    createReviewDto: CreateReviewDto,
+  ): Promise<ReviewEntity> {
+    return await this.recordService.createReview(userId, id, createReviewDto);
+  }
+
+  @ApiOperation({ summary: 'Покупка пластинки' })
+  @ApiResponse({ status: 200 })
+  @ApiBearerAuth('TOKEN')
+  @Post(':id/purchase')
+  @UseGuards(AuthGuard)
+  async createCharge(
+    @User('id') userId: number,
+    @Param('id') id: number,
+    @User('stripeCustomerId') stripeCustomerId: string,
+  ) {
+    return await this.recordService.createCharge(id, userId, stripeCustomerId);
   }
 }

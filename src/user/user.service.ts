@@ -5,12 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
+import StripeService from '../stripe/stripe.service';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
+    private readonly stripeService: StripeService,
   ) {}
 
   async getAllUsers(): Promise<UserEntity[]> {
@@ -26,8 +28,15 @@ export class UserService implements UserServiceInterface {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+    const stripeCustomer = await this.stripeService.createCustomer(
+      createUserDto.firstName,
+      createUserDto.email,
+    );
     const user: UserEntity = new UserEntity();
-    Object.assign(user, createUserDto);
+    Object.assign(user, {
+      ...createUserDto,
+      stripeCustomerId: stripeCustomer.id,
+    });
     return await this.userRepository.createUser(user);
   }
 

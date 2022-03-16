@@ -1,6 +1,14 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { ReviewEntity } from '../review/review.entity';
+import { RecordEntity } from '../record/record.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -29,4 +37,9 @@ export class UserEntity {
     eager: true,
   })
   reviews: ReviewEntity[];
+  @Column({ default: '' })
+  stripeCustomerId?: string;
+  @ManyToMany((type) => RecordEntity, { cascade: true, eager: true })
+  @JoinTable()
+  purchased: RecordEntity[];
 }
