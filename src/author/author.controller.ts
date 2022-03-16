@@ -35,7 +35,7 @@ export class AuthorController {
   @ApiOperation({ summary: 'Получить автора по id' })
   @ApiResponse({ status: 200 })
   @Get(':id')
-  async getById(@Param('id') id: number): Promise<AuthorEntity> {
+  async getAuthorById(@Param('id') id: number): Promise<AuthorEntity> {
     return await this.authorService.getAuthorById(id);
   }
 
@@ -46,7 +46,7 @@ export class AuthorController {
   @UsePipes(new ValidationPipe())
   @UseGuards(AdminGuard)
   @Post()
-  async createAuhtor(
+  async createAuthor(
     @Body() createAuthorDto: CreateAuthorDto,
   ): Promise<AuthorEntity> {
     return await this.authorService.createAuthor(createAuthorDto);
