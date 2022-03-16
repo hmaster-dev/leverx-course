@@ -13,6 +13,7 @@ import { UserModule } from './user/user.module';
 import { AuthMiddleware } from './auth/middlewares/auth.middleware';
 import { ReviewModule } from './review/review.module';
 import { StripeModule } from 'nestjs-stripe';
+import { SenderModule } from './sender/sender.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { StripeModule } from 'nestjs-stripe';
     AuthorModule,
     RecordModule,
     ReviewModule,
+    SenderModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],

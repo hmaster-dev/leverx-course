@@ -7,6 +7,7 @@ import { AuthorModule } from '../author/author.module';
 import { ReviewModule } from '../review/review.module';
 import { UserModule } from '../user/user.module';
 import StripeService from '../stripe/stripe.service';
+import { SenderService } from '../sender/sender.service';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import StripeService from '../stripe/stripe.service';
     ReviewModule,
   ],
   controllers: [RecordContoller],
-  providers: [RecordService, StripeService],
+  providers: [RecordService, StripeService, SenderService],
   exports: [RecordService],
 })
 export class RecordModule {}

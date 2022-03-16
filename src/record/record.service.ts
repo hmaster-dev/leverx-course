@@ -12,6 +12,7 @@ import { ReviewEntity } from '../review/review.entity';
 import { UserEntity } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import StripeService from '../stripe/stripe.service';
+import { SenderService } from '../sender/sender.service';
 
 @Injectable()
 export class RecordService implements RecordServiceInterface {
@@ -22,6 +23,7 @@ export class RecordService implements RecordServiceInterface {
     private readonly userService: UserService,
     private readonly reviewService: ReviewService,
     private readonly stripeService: StripeService,
+    private readonly senderService: SenderService,
   ) {}
 
   async getAllRecords(sort: string): Promise<RecordEntity[]> {
@@ -81,6 +83,11 @@ export class RecordService implements RecordServiceInterface {
       await this.userService.updateUser(userId, {
         purchased: purchased,
       });
+      await this.senderService.send(
+        user.email,
+        'Purchase records',
+        'Some text of mail',
+      );
     }
     return payment;
   }
