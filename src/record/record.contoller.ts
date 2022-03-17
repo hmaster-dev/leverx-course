@@ -38,7 +38,6 @@ export class RecordContoller {
   constructor(private readonly recordService: RecordService) {}
 
   @ApiOperation({ summary: 'Получить все пластинки' })
-  @ApiResponse({ status: 200 })
   @ApiQuery({ name: 'sort', required: false })
   @Get()
   async getAllRecords(@Query('sort') sort): Promise<RecordEntity[]> {
@@ -46,14 +45,12 @@ export class RecordContoller {
   }
 
   @ApiOperation({ summary: 'Получить пластинку по id' })
-  @ApiResponse({ status: 200 })
   @Get('get/:id')
   async getRecordById(@Param('id') id: number): Promise<RecordEntity> {
     return await this.recordService.getRecordById(id);
   }
 
   @ApiOperation({ summary: 'Создание пластинки' })
-  @ApiResponse({ status: 200 })
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: CreateRecordDto })
   @ApiBearerAuth('TOKEN')
@@ -83,14 +80,12 @@ export class RecordContoller {
   }
 
   @ApiOperation({ summary: 'Поиск пластинки по названию и автору' })
-  @ApiResponse({ status: 200 })
   @Get('search')
   async searchRecords(@Query('q') query: string): Promise<any[]> {
     return await this.recordService.searchRecords(query);
   }
 
   @ApiOperation({ summary: 'Создание отзыва' })
-  @ApiResponse({ status: 200 })
   @ApiBody({ type: CreateReviewDto })
   @ApiBearerAuth('TOKEN')
   @UsePipes(new ValidationPipe())
@@ -106,7 +101,6 @@ export class RecordContoller {
   }
 
   @ApiOperation({ summary: 'Покупка пластинки' })
-  @ApiResponse({ status: 200 })
   @ApiBearerAuth('TOKEN')
   @Post(':id/purchase')
   @UseGuards(AuthGuard)

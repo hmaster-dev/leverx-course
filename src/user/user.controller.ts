@@ -30,7 +30,6 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @ApiOperation({ summary: 'Получить всех пользователей' })
-  @ApiResponse({ status: 200 })
   @ApiBearerAuth('TOKEN')
   @UseGuards(AuthGuard)
   @Get()
@@ -39,7 +38,6 @@ export class UserController {
   }
 
   @ApiOperation({ summary: 'Получить пользователя по id' })
-  @ApiResponse({ status: 200 })
   @ApiBearerAuth('TOKEN')
   @UseGuards(AuthGuard)
   @Get(':id')
@@ -48,7 +46,6 @@ export class UserController {
   }
 
   @ApiOperation({ summary: 'Создать пользователя' })
-  @ApiResponse({ status: 200 })
   @ApiBody({ type: CreateUserDto })
   @UsePipes(new ValidationPipe())
   @Post()
@@ -57,7 +54,6 @@ export class UserController {
   }
 
   @ApiOperation({ summary: 'Назначить админа' })
-  @ApiResponse({ status: 200 })
   @ApiBearerAuth('TOKEN')
   @UsePipes(new ValidationPipe())
   @UseGuards(AdminGuard)
@@ -75,7 +71,6 @@ export class UserController {
   }
 
   @ApiOperation({ summary: 'Обновить пользователя' })
-  @ApiResponse({ status: 200 })
   @ApiBody({ type: UpdateUserDto })
   @ApiBearerAuth('TOKEN')
   @UsePipes(new ValidationPipe())

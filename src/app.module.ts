@@ -12,6 +12,7 @@ import { AuthMiddleware } from './auth/middlewares/auth.middleware';
 import { ReviewModule } from './review/review.module';
 import { StripeModule } from 'nestjs-stripe';
 import { SenderModule } from './sender/sender.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SenderModule } from './sender/sender.module';
         apiVersion: '2020-08-27',
       }),
     }),
+    EventEmitterModule.forRoot(),
     UserModule,
     AuthModule,
     AuthorModule,
