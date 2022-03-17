@@ -21,19 +21,20 @@ describe('AuthorController', () => {
     jest.clearAllMocks();
   });
 
-  describe('getAuthorById', () => {
+  describe('AuthorController finds', () => {
     describe('when getAllAuthors is called', () => {
       let authors: AuthorEntity[];
       beforeEach(async () => {
         authors = await authorController.getAllAuthors();
       });
       test('then it should call authorService', () => {
-        expect(authorService.getAllAuthors());
+        expect(authorService.getAllAuthors).toHaveBeenCalled();
       });
       test('then it should return an array of authors', () => {
         expect(authors).toEqual([authorStub()]);
       });
     });
+
     describe('when getAuthorById is called', () => {
       let author: AuthorEntity;
       beforeEach(async () => {
@@ -46,6 +47,9 @@ describe('AuthorController', () => {
         expect(author).toEqual(authorStub());
       });
     });
+  });
+
+  describe('AuthorController saves', () => {
     describe('when createAuthor is called', () => {
       let author: AuthorEntity;
       beforeEach(async () => {

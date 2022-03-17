@@ -6,8 +6,6 @@ import { UserRepository } from './user.repository';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import StripeService from '../stripe/stripe.service';
-import { AuthorEntity } from '../author/author.entity';
-import { RecordEntity } from '../record/record.entity';
 
 @Injectable()
 export class UserService implements UserServiceInterface {

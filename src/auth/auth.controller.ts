@@ -10,7 +10,9 @@ export class AuthController {
 
   @UseGuards(AuthGuard('google'))
   @Get()
-  async googleSignIn() {}
+  async googleSignIn() {
+    console.log('google authenticate');
+  }
 
   @UseGuards(AuthGuard('google'))
   @Get('/in')

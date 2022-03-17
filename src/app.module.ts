@@ -1,6 +1,4 @@
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthorModule } from './author/author.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from './config';
@@ -39,8 +37,8 @@ import { SenderModule } from './sender/sender.module';
     ReviewModule,
     SenderModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, GoogleStrategy],
+  controllers: [],
+  providers: [GoogleStrategy],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

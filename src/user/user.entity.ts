@@ -39,7 +39,7 @@ export class UserEntity {
   reviews: ReviewEntity[];
   @Column({ default: '' })
   stripeCustomerId?: string;
-  @ManyToMany((type) => RecordEntity, { cascade: true, eager: true })
+  @ManyToMany(() => RecordEntity, { cascade: true, eager: true })
   @JoinTable()
   purchased: RecordEntity[];
 }

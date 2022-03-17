@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Query } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { RecordServiceInterface } from './types/recordService.interface';
 import { RecordEntity } from './record.entity';
 import { InjectRepository } from '@nestjs/typeorm';
