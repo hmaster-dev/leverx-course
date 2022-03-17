@@ -1,4 +1,5 @@
 const config = () => ({
+  NODE_ENV: process.env.NODE_ENV,
   port: Number(process.env.PORT),
   database: {
     type: 'postgres',

@@ -18,6 +18,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: `${process.cwd()}/${process.env.NODE_ENV}.env`,
       load: [config],
     }),
     TypeOrmModule.forRootAsync({
