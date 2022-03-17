@@ -2,6 +2,7 @@ const config = () => ({
   NODE_ENV: process.env.NODE_ENV,
   port: Number(process.env.PORT),
   database: {
+    url: process.env.DB_URL,
     type: 'postgres',
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -14,6 +15,7 @@ const config = () => ({
     cli: {
       migrationsDir: 'src/migrations',
     },
+    autoLoadEntities: true,
   },
   google_client_id: process.env.GOOGLE_CLIENT_ID,
   google_client_secret: process.env.GOOGLE_SECRET,
