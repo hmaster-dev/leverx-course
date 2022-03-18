@@ -22,6 +22,7 @@ const config = () => ({
   },
   google_client_id: process.env.GOOGLE_CLIENT_ID,
   google_client_secret: process.env.GOOGLE_SECRET,
+  google_callback_url: process.env.GOOGLE_CALLBACK_URL,
   jwtSecret: process.env.JWT_SECRET,
   jwtExpireTime: process.env.JWT_EXPIRE_TIME,
   stripe_key: process.env.STRIPE_SECRET,

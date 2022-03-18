@@ -7,9 +7,9 @@ import { ConfigService } from '@nestjs/config';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(configService: ConfigService) {
     super({
-      clientID: configService.get('GOOGLE_CLIENT_ID'),
-      clientSecret: configService.get('GOOGLE_SECRET'),
-      callbackURL: 'http://localhost:3000/auth/in',
+      clientID: configService.get('google_client_id'),
+      clientSecret: configService.get('google_client_secret'),
+      callbackURL: configService.get('google_callback_url'),
       scope: ['email', 'profile'],
     });
   }

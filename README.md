@@ -1,4 +1,6 @@
-[LeverX Course Shustov](https://damp-beyond-33307.herokuapp.com/)
+## Description
+
+[LeverX Course - Shustov](https://damp-beyond-33307.herokuapp.com/)
 
 ## Installation
 
