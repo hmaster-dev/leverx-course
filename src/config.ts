@@ -18,6 +18,7 @@ const config = () => ({
     cli: {
       migrationsDir: 'src/migrations',
     },
+    migrationsRun: true,
     autoLoadEntities: true,
   },
   google_client_id: process.env.GOOGLE_CLIENT_ID,
